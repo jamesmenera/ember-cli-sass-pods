@@ -6,7 +6,7 @@ var util = require('util');
 module.exports = {
   podsDir: '',
 
-  description: 'Generates a style.scss file',
+  description: 'Generates a style.sass file',
 
   beforeInstall: function (options) {
       // replace \ with / for compatibility with windows-style nested paths
@@ -30,7 +30,7 @@ module.exports = {
       //console.log(util.inspect(options.project, false, null));
       var entity = options.entity;
 
-      addScssToImportFile(entity.name, {
+      addSassToImportFile(entity.name, {
           name: entity.name,
           root: options.project.root,
           podsDir: this.podsDir
@@ -38,10 +38,10 @@ module.exports = {
   }
 };
 
-function addScssToImportFile (name, options) {
+function addSassToImportFile (name, options) {
       var importFile = options.podsDir ? options.podsDir.replace(/(\\|\/)$/, '') : 'pods',
           filePath = path.join(options.root, 'app/styles'),
-          importScssPath = path.join(filePath, importFile + '.scss'),
+          importSassPath = path.join(filePath, importFile + '.sass'),
           podsDir = options.podsDir ? importFile + '/' : '',
           newLine = '@import "app/' + podsDir + options.name + '/style";\n',
           source;
@@ -50,11 +50,11 @@ function addScssToImportFile (name, options) {
         mkdirp(filePath);
       }
 
-      if (!fs.existsSync(importScssPath)) {
-          fs.writeFileSync(importScssPath, newLine, 'utf8');
+      if (!fs.existsSync(importSassPath)) {
+          fs.writeFileSync(importSassPath, newLine, 'utf8');
       } else {
-          source = fs.readFileSync(importScssPath, 'utf-8');
+          source = fs.readFileSync(importSassPath, 'utf-8');
           source += newLine;
-          fs.writeFileSync(importScssPath, source);
+          fs.writeFileSync(importSassPath, source);
       }
   }
