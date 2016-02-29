@@ -43,7 +43,7 @@ function addSassToImportFile (name, options) {
           filePath = path.join(options.root, 'app/styles'),
           importSassPath = path.join(filePath, importFile + '.sass'),
           podsDir = options.podsDir ? importFile + '/' : '',
-          newLine = '@import "app/' + podsDir + options.name + '/style";\n',
+          newLine = '@import \'app/' + podsDir + options.name + '/style\'\n',
           source;
 
       if (!fs.existsSync(filePath)) {
